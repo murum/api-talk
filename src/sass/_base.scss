@@ -1,9 +1,3 @@
-// Variables
-
-$header-size: 2em;
-$font-color: #343434;
-$content-width: 1200px;
-
 // Default reset
 
 html, body, div, span, applet, object, iframe,
@@ -25,7 +19,6 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -49,4 +42,9 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+.tmpl {
+	/* There's no need to see templates */
+	display:none;
 }
