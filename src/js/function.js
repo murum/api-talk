@@ -22,6 +22,51 @@ var Api = {
 	}
 }
 
+var Favorites = {
+	favorites : [],
+	add : function(Obj) {
+		var key = this.find(Obj);
+		if (key > -1) {
+			this.favorites[key] = Obj;
+		} else {
+			this.favorites.push(Obj)
+		}
+		this.save();
+	},
+	remove : function (Obj) {
+		var key = this.find(Obj);
+		if (key > -1) {
+			this.favorites.splice(key,1);
+			this.save();
+		}
+	},
+	isFavorite : function(Obj) {
+		var key = this.find(Obj);
+		if (key > -1) {
+			return true;
+		} 
+		return false;
+	},
+	find : function (Obj) {
+		for (var key=0; key < this.favorites.length; key++) {
+			if (this.favorites[key].Id === Obj.Id) {
+				return key;
+			}
+		}
+		return -1;
+	},
+	save : function () {
+		localStorage.setItem("jetshop.favs",JSON.stringify(this.favorites));
+	},
+	restore : function() {
+		try {
+			this.favorites = JSON.parse(localStorage.getItem('jetshop.favs'))
+		} catch (err) {
+
+		}
+	}
+}
+
 /*
  * Parses categories from API call
  * @param object: Categories
@@ -36,11 +81,13 @@ function parseCategories(Categories,Opts) {
 		var Category = Categories[key];
 		var $Li = Opts.li.clone(true);
 		var $Link = $Li.find('a');
+
 		$Link	.html(Category.Name)
 					.attr('href',Category.CategoryUrl)
 					.attr('data-id',Category.Id);
 
 		if (Category.HasSubCategories === true) {
+
 			var $Ul = Opts.ul.clone();
 			parseCategories(Category.SubCategories,{
 				placeHolder: $Ul,
@@ -48,6 +95,7 @@ function parseCategories(Categories,Opts) {
 				li: Opts.li
 			});
 			$Li.append($Ul);
+
 		}
 		Opts.placeHolder.append($Li);
 	}
