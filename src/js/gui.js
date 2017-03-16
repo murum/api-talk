@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 	var $Products = $('section.products');
 	var $TmplProduct = $Products.find('div.tmpl');
 	// Remove empty div from section, not needed 
-	$TmplProduct.remove().removeClass('tmpl');
+	$TmplProduct.remove().removeAttr('class');
 
 	// Placeholder for categories
 	var $CategoryUl = $('header > ul');
@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 	// Template Li from UL,
 	var $TmplLi = $CategoryUl.find('li.tmpl');
 	// Remove empty Li from DOM, it's not needed. 
-	$TmplLi.remove().removeClass('tmpl');
+	$TmplLi.remove().removeAttr('class');
 
 	var $TmplUl = $CategoryUl.clone(true);
 
@@ -30,6 +30,7 @@ jQuery(document).ready(function($) {
 				placeHolder: $CategoryUl,
 				li: $TmplLi.clone(true),
 				ul: $Ul,
+				breadcrumb: ""
 			})
 	});
 
@@ -54,6 +55,8 @@ jQuery(document).ready(function($) {
 				$Products.removeClass('favorites');
 			});
 		}
+
+		$('.breadcrumb').html($(this).attr('data-breadcrumb'));
 		return false;
 	});
 
@@ -72,7 +75,7 @@ jQuery(document).ready(function($) {
 		} else {
 			Favorites.remove(Product);
 			if ($Products.hasClass('favorites')) {
-				$this.parents('[data-obj]').remove();
+				$this.parents('[data-obj]').fadeOut(300);
 			}
 		}
 

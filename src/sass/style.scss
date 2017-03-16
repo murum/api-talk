@@ -22,42 +22,55 @@ header {
 	background-color:$header-bg;
 	left:0;
 	top:0;
-	display:flex;
-  align-items: center;
-  justify-content: center;
+	display:inline-block;
+	text-align:center;
 
 	> ul {
 
+		// Apply to all li in header ul
+		li {
+			background-color: #424040;
+			min-width: 110px;
+		}
+
+		//The main li elms
 		> li {
 			position:relative;
 			display:inline-block;
 			vertical-align: top;
+			padding: 21px 40px;
 		}
-
+		// All Ul in main li elms
 		ul {
 			display:none;
 			position:absolute;
 			background-color:$header-bg;
+			margin-top:4px;
 			left:0;
-
 			> li {
-				
+				margin-top: 5px;
+				padding: 5px 40px;
 			}
 
 		}
-	
-		ul:hover,
 		li:hover > ul {
-			display:block;	
+			display:block;
 		}
 	}
 
 	li > a {
-		padding: 10px 30px;
-		white-space: nowrap;
+		display: block;
 		text-decoration: none;
 		color: #fff;
 	}
+}
+
+$max-width:1600px;
+
+.breadcrumb {
+	max-width: $max-width;
+	margin: 0 auto;
+	padding-top: 30px;
 }
 
 $product-bg: #cbd4ff;
@@ -66,10 +79,10 @@ section.products {
 	padding-top:20px;
 	display:flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 0 auto;
   flex-wrap: wrap;
-	max-width: 1600px;
+	max-width: $max-width;
 	text-align: center;
 
 	> div {
@@ -79,7 +92,8 @@ section.products {
 		border:1px solid $product-bg;
 		width: 200px;
 		height: 250px;
-		margin:20px;
+		margin-top: 20px;
+		margin-right: 20px;
 		padding:5px;
 		background-color: $product-bg;
 		> div {
@@ -88,8 +102,12 @@ section.products {
 		}
 		div.btns {
 			padding: 10px 0 5px 0;
+			.fa-heart {
+				transition: all 300ms ease-in;
+			}
 			.fa-heart.active {
 				color:#da4229;
+				
 			}
 		}
 		> div.imgWrp {

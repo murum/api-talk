@@ -84,15 +84,23 @@ var Favorites = {
 function parseCategories(Categories,Opts) {
 
 	// We should have some form of validation here
-
+	
+	
 	for (var key=0;key<Categories.length;key++) {
 		var Category = Categories[key];
-		var $Li = Opts.li.clone(true);
+		var $Li = Opts.li.clone();
 		var $Link = $Li.find('a');
+		if (Opts.breadcrumb === '') {
+			var breadcrumb = Category.Name;
+		} else {
+			var breadcrumb = Opts.breadcrumb  + " &raquo; " + Category.Name;
+		}
+		
 
 		$Link	.html(Category.Name)
 					.attr('href',Category.CategoryUrl)
-					.attr('data-id',Category.Id);
+					.attr('data-id',Category.Id)
+					.attr('data-breadcrumb',breadcrumb);
 
 		if (Category.HasSubCategories === true) {
 
@@ -100,12 +108,14 @@ function parseCategories(Categories,Opts) {
 			parseCategories(Category.SubCategories,{
 				placeHolder: $Ul,
 				ul: Opts.ul,
-				li: Opts.li
+				li: Opts.li,
+				breadcrumb: breadcrumb
 			});
 			$Li.append($Ul);
 
 		}
 		Opts.placeHolder.append($Li);
+		Opts.placeHolder.append(" ");
 	}
 }
 
