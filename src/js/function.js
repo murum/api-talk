@@ -109,13 +109,14 @@ function parseCategories(Categories,Opts) {
 				placeHolder: $Ul,
 				ul: Opts.ul,
 				li: Opts.li,
-				breadcrumb: breadcrumb
+				breadcrumb: breadcrumb,
+				isChild: true // Needed if we need som special case on on only childes
 			});
+			$Li.append('<i class="fa fa-arrow-down" aria-hidden="true">');
 			$Li.append($Ul);
-
 		}
 		Opts.placeHolder.append($Li);
-		Opts.placeHolder.append(" ");
+		Opts.placeHolder.append(' ');
 	}
 }
 

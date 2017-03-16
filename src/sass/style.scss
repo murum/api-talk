@@ -29,10 +29,15 @@ header {
 
 		// Apply to all li in header ul
 		li {
+			position: relative;
 			background-color: #424040;
 			min-width: 110px;
+			color:#fff;
 		}
-
+		li > .fa {
+			position:absolute;
+			right:10px;
+		}
 		//The main li elms
 		> li {
 			position:relative;
@@ -59,9 +64,10 @@ header {
 	}
 
 	li > a {
-		display: block;
+		display: inline-block;
 		text-decoration: none;
 		color: #fff;
+		margin-right:4px;
 	}
 }
 
@@ -78,13 +84,12 @@ $product-bg: #cbd4ff;
 section.products {
 	padding-top:20px;
 	display:flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 0 auto;
+	margin: 0 auto;
   flex-wrap: wrap;
 	max-width: $max-width;
 	text-align: center;
-
+	justify-content: center;
+	  align-items: center;
 	> div {
     display: flex;
     flex-direction: column;
@@ -104,6 +109,7 @@ section.products {
 			padding: 10px 0 5px 0;
 			.fa-heart {
 				transition: all 300ms ease-in;
+				cursor: pointer;
 			}
 			.fa-heart.active {
 				color:#da4229;
