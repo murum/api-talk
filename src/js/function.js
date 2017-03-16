@@ -48,12 +48,17 @@ var Favorites = {
 		return false;
 	},
 	find : function (Obj) {
-		for (var key=0; key < this.favorites.length; key++) {
-			if (this.favorites[key].Id === Obj.Id) {
-				return key;
+		if (this.favorites !== null) {
+			for (var key=0; key < this.favorites.length; key++) {
+				if (this.favorites[key].Id === Obj.Id) {
+					return key;
+				}
 			}
 		}
 		return -1;
+	},
+	getAll : function() {
+		return this.favorites;
 	},
 	save : function () {
 		localStorage.setItem("jetshop.favs",JSON.stringify(this.favorites));
@@ -62,7 +67,10 @@ var Favorites = {
 		try {
 			this.favorites = JSON.parse(localStorage.getItem('jetshop.favs'))
 		} catch (err) {
-
+			
+		}
+		if (this.favorites === null) {
+			this.favorites = []
 		}
 	}
 }
@@ -99,4 +107,33 @@ function parseCategories(Categories,Opts) {
 		}
 		Opts.placeHolder.append($Li);
 	}
+}
+
+/*
+ * Parses products
+ * @param object: Products
+ * @param object: Opts - Options for placeholder, div template 
+ * @return none - Function places the parsed products into the DOM
+ */
+function parseProducts(Products,Opts) {
+
+	Opts.placeHolder.html('');
+	for(var key=0;key < Products.length;key++) {
+		var Product = Products[key];
+		var $curr = Opts.div.clone(true);
+
+		$curr.find('> h2').html(Product.SubName);
+		$curr.find('> span').html(Product.PriceString);
+
+		$curr.find('> div > img')	.attr('src',Opts.baseImgUrl + Product.Images[0].Url)
+															.attr('alt',Product.Images[0].AltText);
+
+		$curr.attr('data-obj',JSON.stringify(Product));
+
+		if (Favorites.isFavorite(Product)) {
+			$curr.find('.fa.fa-heart').toggleClass('active');
+		}
+		Opts.placeHolder.append($curr); 
+	}
+
 }

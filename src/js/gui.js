@@ -12,6 +12,7 @@ jQuery(document).ready(function($) {
 
 	// Placeholder for categories
 	var $CategoryUl = $('header > ul');
+
 	// Template Li from UL,
 	var $TmplLi = $CategoryUl.find('li.tmpl');
 	// Remove empty Li from DOM, it's not needed. 
@@ -21,10 +22,14 @@ jQuery(document).ready(function($) {
 
 	
 	Api.fetch('categories').done(function(rsp) {
+		
+		var $Ul = $TmplUl.clone(true);
+		$Ul.find('li').remove();
+
 			parseCategories(rsp,{
 				placeHolder: $CategoryUl,
 				li: $TmplLi.clone(true),
-				ul: $TmplUl.clone(true),
+				ul: $Ul,
 			})
 	});
 
@@ -32,24 +37,23 @@ jQuery(document).ready(function($) {
 
 	// header link, load products for that category
 	$('header').on('click','a',function(event) {
-		Api.fetch('categories/'+$(this).attr('data-id')+'/products').done(function(rsp) {
-			// Clear Products placeholder
-			$Products.html('');
-			
-			for(var key=0;key < rsp.ProductItems.length;key++) {
-				var Product = rsp.ProductItems[key];
-				var $curr = $TmplProduct.clone(true);
-				$curr.find('> h2').html(Product.SubName);
-				$curr.find('> span').html(Product.PriceString);
-				$curr.find('> div > img')	.attr('src',baseImgUrl + Product.Images[0].Url)
-																	.attr('alt',Product.Images[0].AltText);
-				$curr.attr('data-obj',JSON.stringify(Product));
-				if (Favorites.isFavorite(Product)) {
-					$curr.find('.fa.fa-heart').toggleClass('active');
-				}
-				$Products.append($curr); 
-			}
-		});
+		if ($(this).hasClass('favorites')) {
+			parseProducts(Favorites.getAll(),{
+					placeHolder : $Products,
+					div : $TmplProduct,
+					baseImgUrl: baseImgUrl
+			});
+			$Products.addClass('favorites');
+		} else {
+			Api.fetch('categories/'+$(this).attr('data-id')+'/products').done(function(rsp) {
+				parseProducts(rsp.ProductItems,{
+					placeHolder : $Products,
+					div : $TmplProduct,
+					baseImgUrl: baseImgUrl
+				});
+				$Products.removeClass('favorites');
+			});
+		}
 		return false;
 	});
 
@@ -67,7 +71,11 @@ jQuery(document).ready(function($) {
 			Favorites.add(Product);
 		} else {
 			Favorites.remove(Product);
+			if ($Products.hasClass('favorites')) {
+				$this.parents('[data-obj]').remove();
+			}
 		}
+
 
 	});
 
