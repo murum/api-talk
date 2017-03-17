@@ -148,3 +148,11 @@ function parseProducts(Products,Opts) {
 	}
 
 }
+
+/* Detect mobile
+ * return bool
+ */
+function isMobile() {
+  try{ document.createEvent("TouchEvent"); return true; }
+  catch(e){ return false; }
+}

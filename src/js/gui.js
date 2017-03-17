@@ -77,7 +77,11 @@ jQuery(document).ready(function($) {
 				$Products.removeClass('favorites');
 			});
 		}
-
+		if (isMobile()) {
+			if($('header > ul').is(":visible")) {
+				$('header > ul').slideToggle('slow');
+			}
+		}
 		$('.breadcrumb').html($(this).attr('data-breadcrumb'));
 		return false;
 	});
