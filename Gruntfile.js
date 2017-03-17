@@ -59,6 +59,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// Register Grunt tasks
-	// grunt.registerTask('default', ['sass','postcss','cssmin','uglify']);
+	grunt.registerTask('build', ['sass','postcss','cssmin','uglify']);
 	grunt.registerTask('default', ['watch']);
 }
