@@ -153,6 +153,14 @@ function parseProducts(Products,Opts) {
  * return bool
  */
 function isMobile() {
-  try{ document.createEvent("TouchEvent"); return true; }
-  catch(e){ return false; }
+  try{ 
+  	document.createEvent("TouchEvent"); 
+  	if (window.matchMedia("only screen and (max-width: 886px)").matches) {
+  		return true;
+  	}
+  	return false; 
+
+  } catch(e) { 
+  	return false; 
+  }
 }
