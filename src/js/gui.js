@@ -43,8 +43,8 @@ jQuery(document).ready(function($) {
 	});
 
 	// Handle when click outside menu
-	$(document).click(function(event) { 
-			if(!$(event.target).closest('header > ul').length) {
+	$(document).click(function(event) {
+			if(!$(event.target).closest('header > ul').length && isMobile()) {
 					if($('header > ul').is(":visible")) {
 							$('header > ul').slideToggle('slow');
 					}
