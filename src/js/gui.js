@@ -36,6 +36,28 @@ jQuery(document).ready(function($) {
 
 	// All the fancy bindings
 
+	// Handle menu button
+	$('header > i.fa').click(function (event) {
+		event.stopPropagation();
+		$('header > ul').slideToggle('slow');
+	});
+
+	// Handle when click outside menu
+	$(document).click(function(event) { 
+			if(!$(event.target).closest('header > ul').length) {
+					if($('header > ul').is(":visible")) {
+							$('header > ul').slideToggle('slow');
+					}
+			}
+	})
+		
+	// Handle click down arrow click for sub category
+	$('header > ul').on('click','.fa-arrow-down, .fa-arrow-up', function(event) {
+		$(this).find('+ ul').slideToggle('slow');
+		$(this).toggleClass('fa-arrow-down');
+		$(this).toggleClass('fa-arrow-up');
+	});
+
 	// header link, load products for that category
 	$('header').on('click','a',function(event) {
 		if ($(this).hasClass('favorites')) {
@@ -60,12 +82,13 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-		// Handle all A clicks here - Used for push state.
+	// Handle all A clicks here - Used for push state.
 	$(document).on('click','a',function(event) {
 		//history.pushState(null,$this.text(),baseUrl+$(this).attr('href'));
 		return false;
 	});
 
+	// Handle click on the heart
 	$('.products').on('click','.fa.fa-heart',function(event) {
 		var $this = $(this);
 		Product = JSON.parse($this.parents('[data-obj]').attr('data-obj'));

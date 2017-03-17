@@ -1,0 +1,19 @@
+/* CSS for small devices, 900px width or less */
+
+header {
+	> .fa {
+		display: inline-block;
+
+	}
+	> ul {
+		display:none;
+		width:100%;
+		ul {
+			width:100%;
+		}
+		li {
+			width:100%;
+			padding:20px;
+		}
+	}
+}
