@@ -93,7 +93,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// Handle click on the heart
-	$('.products').on('click','.fa.fa-heart',function(event) {
+	$('.products').on('click','.favorite',function(event) {
 		var $this = $(this);
 		Product = JSON.parse($this.parents('[data-obj]').attr('data-obj'));
 		$this.toggleClass('active');

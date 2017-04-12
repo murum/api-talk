@@ -136,13 +136,13 @@ function parseProducts(Products,Opts) {
 		$curr.find('> h2').html(Product.SubName);
 		$curr.find('> span').html(Product.PriceString);
 
-		$curr.find('> div > img')	.attr('src',Opts.baseImgUrl + Product.Images[0].Url)
+		$curr.find('> div > span > img')	.attr('src',Opts.baseImgUrl + Product.Images[0].Url.replace('small', 'large'))
 															.attr('alt',Product.Images[0].AltText);
 
 		$curr.attr('data-obj',JSON.stringify(Product));
 
 		if (Favorites.isFavorite(Product)) {
-			$curr.find('.fa.fa-heart').toggleClass('active');
+			$curr.find('.favorite').toggleClass('active');
 		}
 		Opts.placeHolder.append($curr); 
 	}
